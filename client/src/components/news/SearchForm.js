@@ -2,7 +2,11 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Form, Segment, Icon } from 'semantic-ui-react';
 
-import { getNews, incrementPageNumber } from '../../actions/newsFeed';
+import {
+  getNews,
+  incrementPageNumber,
+  clearSearchResults,
+} from '../../actions/newsFeed';
 import { categories as categoryOptions } from '../../data/categories';
 import { languages as languageOptions } from '../../data/languages';
 import { countries as countryOptions } from '../../data/countries';
@@ -40,7 +44,7 @@ const SearchForm = (props) => {
     props.getNews(requestObj);
   }, []);
 
-  const clearForm = () =>
+  const clearForm = () => {
     setFormData({
       searchTerm: '',
       category: '',
@@ -52,6 +56,8 @@ const SearchForm = (props) => {
       source: '',
       domain: '',
     });
+    props.clearSearchResults();
+  };
   const handleChange = (e, { name, value }) => {
     setFormData({ ...formData, [name]: value });
   };
@@ -243,6 +249,7 @@ const mapDispatchToProps = (dispatch) => ({
   getNews: (language, country, category, uri, page) =>
     dispatch(getNews(language, country, category, uri, page)),
   incrementPageNumber: () => dispatch(incrementPageNumber()),
+  clearSearchResults: () => dispatch(clearSearchResults()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);

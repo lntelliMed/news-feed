@@ -59,24 +59,25 @@ const SearchResultsPage = (props) => {
 
   return (
     <Fragment>
-      {props.page &&
-        props.pageSize &&
-        props.totalResults &&
-        props.formData.searchTerm && (
-          <Header as='h2'>
-            {`Displaying results 1-${Math.min(
-              props.page * props.pageSize,
-              props.totalResults
-            )} out of ${props.totalResults} for ${props.formData.searchTerm}`}
-            <br></br>
-            <br></br>
-          </Header>
-        )}
-
       {loading ? (
         <Spinner />
       ) : (
         <div className={'vertical'}>
+          {props.page &&
+            props.pageSize &&
+            props.totalResults &&
+            props.formData.searchTerm && (
+              <Header as='h2'>
+                {`Displaying results 1-${Math.min(
+                  props.page * props.pageSize,
+                  props.totalResults
+                )} out of ${props.totalResults} for ${
+                  props.formData.searchTerm
+                }`}
+                <br></br>
+                <br></br>
+              </Header>
+            )}
           <Item.Group divided>
             {props.searchResults &&
               props.searchResults.map((item, index) => (
