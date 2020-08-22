@@ -113,6 +113,7 @@ const SearchNewsPage = ({
     if (!searchTerm.trim()) {
       return alert('Please enter a search term!');
     }
+    clearSearchResults();
     searchAllNews();
     setAdvancedSettings(false);
   };
