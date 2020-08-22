@@ -13,7 +13,7 @@ const Navbar = ({ setCategory, loading }) => {
 
   useEffect(() => {
     setCategory(newCategory);
-  }, [newCategory]);
+  }, [newCategory, setCategory]);
 
   const handleItemClick = (e, { name, value }) => {
     if (name === 'category') {
@@ -64,23 +64,13 @@ const Navbar = ({ setCategory, loading }) => {
           >
             <Icon name='search' />
           </Menu.Item>
-          <Link to='/saved-articles'>
-            <Menu.Item
-              name='my articles'
-              active={activeItem === 'my articles'}
-              onClick={handleItemClick}
-            />
-          </Link>
-
-          {false && (
-            <Link to='/login'>
-              <Menu.Item
-                name='login'
-                active={activeItem === 'login'}
-                onClick={handleItemClick}
-              />
-            </Link>
-          )}
+          <Menu.Item
+            as={Link}
+            to='/saved-articles'
+            name='my articles'
+            active={activeItem === 'my articles'}
+            onClick={handleItemClick}
+          />
         </Menu.Menu>
       </Menu>
     </div>

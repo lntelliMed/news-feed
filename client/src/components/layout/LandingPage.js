@@ -30,7 +30,7 @@ const LandingPage = ({
       pageSize,
     };
     getNews(requestObj);
-  }, [page, category]);
+  }, [page, category, language, country, uri, pageSize]);
 
   const newsArticles = news[category];
 
@@ -54,9 +54,9 @@ const LandingPage = ({
 LandingPage.propTypes = {
   getNews: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
-  news: PropTypes.array.isRequired,
+  news: PropTypes.any,
   totalResults: PropTypes.number.isRequired,
-  error: PropTypes.object,
+  error: PropTypes.any,
   loading: PropTypes.bool.isRequired,
 };
 

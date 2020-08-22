@@ -55,7 +55,7 @@ const SearchNewsPage = ({
       uri: 'sources',
     };
     getNews(requestObj);
-  }, []);
+  }, [getNews]);
 
   let apiNewsSources;
   if (sources && sources.length) {
@@ -265,9 +265,9 @@ const SearchNewsPage = ({
 SearchNewsPage.propTypes = {
   getNews: PropTypes.func.isRequired,
   sources: PropTypes.array.isRequired,
-  searchResults: PropTypes.array.isRequired,
-  totalResults: PropTypes.number.isRequired,
-  error: PropTypes.object,
+  searchResults: PropTypes.array,
+  totalResults: PropTypes.number,
+  error: PropTypes.any,
   loading: PropTypes.bool.isRequired,
 };
 

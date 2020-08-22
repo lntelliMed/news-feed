@@ -66,12 +66,12 @@ const NewsArticles = ({
 };
 
 NewsArticles.propTypes = {
-  category: PropTypes.string.isRequired,
-  searchTerm: PropTypes.string.isRequired,
+  category: PropTypes.string,
+  searchTerm: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   newsArticles: PropTypes.array.isRequired,
   totalResults: PropTypes.number.isRequired,
-  error: PropTypes.object,
+  error: PropTypes.any,
   page: PropTypes.number.isRequired,
   pageSize: PropTypes.number.isRequired,
   incrementPageNumber: PropTypes.func.isRequired,

@@ -1,12 +1,11 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import NotFound from '../layout/NotFound';
 import SearchNewsPage from '../layout/SearchNewsPage';
 import SavedNewsArticles from '../layout/SavedNewsArticles';
 
-const Routes = (props) => {
+const Routes = () => {
   return (
     <Switch>
       <Route exact path='/search' component={SearchNewsPage} />
@@ -15,15 +14,6 @@ const Routes = (props) => {
       <Route component={NotFound} />
     </Switch>
   );
-};
-
-Routes.propTypes = {
-  getNews: PropTypes.func.isRequired,
-  category: PropTypes.string.isRequired,
-  news: PropTypes.array.isRequired,
-  totalResults: PropTypes.number.isRequired,
-  error: PropTypes.object,
-  loading: PropTypes.bool.isRequired,
 };
 
 export default Routes;

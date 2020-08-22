@@ -46,7 +46,7 @@ const NewsArticle = ({
         {description && (
           <p>
             {description}{' '}
-            <a target='_blank' href={url}>
+            <a target='_blank' href={url} rel='noopener noreferrer'>
               {' read more..'}
             </a>
           </p>
@@ -57,7 +57,7 @@ const NewsArticle = ({
         <Item.Meta>
           <p>
             Content: {content}{' '}
-            <a target='_blank' href={url}>
+            <a target='_blank' href={url} rel='noopener noreferrer'>
               {' read more..'}
             </a>
           </p>
@@ -76,11 +76,11 @@ const NewsArticle = ({
 
 NewsArticle.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  content: PropTypes.string,
   url: PropTypes.string.isRequired,
-  urlToImage: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
+  urlToImage: PropTypes.string,
+  author: PropTypes.string,
   publishedAt: PropTypes.string.isRequired,
   source: PropTypes.object.isRequired,
 };
