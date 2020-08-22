@@ -3,7 +3,9 @@ const config = require('config');
 const NewsAPI = require('newsapi');
 
 const router = express.Router();
-const newsApi = new NewsAPI(config.get('newsApiKey'));
+const NEWS_API_KEY = process.env.NEWS_API_KEY || config.get('newsApiKey');
+
+const newsApi = new NewsAPI(NEWS_API_KEY);
 
 router.get('/v2/top-headlines', async (req, res) => {
   // ***** SAMPLE TOP-HEADLINES REQUEST ******* //
