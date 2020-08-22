@@ -7,7 +7,7 @@ import {
   setCategory,
   incrementPageNumber,
 } from '../../actions/newsFeed';
-import NewsItem from '../news/NewsArticle';
+import NewsArticle from '../news/NewsArticle';
 import Spinner from './Spinner';
 
 const Landing = (props) => {
@@ -26,35 +26,33 @@ const Landing = (props) => {
 
   const { loading, error, news } = props;
   const data = news[props.category];
+
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <Fragment>
       <Header as='h2'>Top Headlines - {props.category}</Header>
 
-      {loading ? (
-        <Spinner />
-      ) : (
-        <div className={'vertical'}>
-          <Item.Group divided>
-            {data &&
-              data.map((item, index) => (
-                <Segment key={index}>
-                  <NewsItem {...item} />
-                </Segment>
-              ))}
-          </Item.Group>
+      <Item.Group divided>
+        {data &&
+          data.map((item, index) => (
+            <Segment key={index}>
+              <NewsArticle {...item} />
+            </Segment>
+          ))}
+      </Item.Group>
 
-          {error && <div>{error}</div>}
-          {data && data.length && !loading && (
-            <Button
-              fluid
-              loading={props.loading}
-              primary
-              onClick={() => props.incrementPageNumber()}
-            >
-              Load more..
-            </Button>
-          )}
-        </div>
+      {error && <div>{error}</div>}
+      {data && data.length && !loading && (
+        <Button
+          fluid
+          loading={props.loading}
+          primary
+          onClick={() => props.incrementPageNumber()}
+        >
+          Load more..
+        </Button>
       )}
     </Fragment>
   );

@@ -9,7 +9,7 @@ import { countries as countryOptions } from '../../data/countries';
 import { sources as sourceOptions } from '../../data/sources';
 import { domains as domainOptions } from '../../data/domains';
 import { sortBy as sortByOptions } from '../../data/sortBy';
-import SearchResultsPage from './SearchResultsPage';
+import SearchResultsPage from './NewsArticles';
 
 const SearchForm = (props) => {
   const [formData, setFormData] = useState({
