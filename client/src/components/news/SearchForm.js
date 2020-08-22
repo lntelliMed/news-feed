@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Form, Checkbox, Segment, Icon } from 'semantic-ui-react';
+import { Form, Segment, Icon } from 'semantic-ui-react';
 
 import { getNews, incrementPageNumber } from '../../actions/newsFeed';
 import { categories as categoryOptions } from '../../data/categories';
@@ -40,6 +40,18 @@ const SearchForm = (props) => {
     props.getNews(requestObj);
   }, []);
 
+  const clearForm = () =>
+    setFormData({
+      searchTerm: '',
+      category: '',
+      sortBy: '',
+      from: '',
+      to: '',
+      language: '',
+      country: '',
+      source: '',
+      domain: '',
+    });
   const handleChange = (e, { name, value }) => {
     setFormData({ ...formData, [name]: value });
   };
@@ -83,17 +95,6 @@ const SearchForm = (props) => {
 
     props.getNews(requestObj);
 
-    // setFormData({
-    //   searchTerm: '',
-    //   category: '',
-    //   sortBy: '',
-    //   from: '',
-    //   to: '',
-    //   language: '',
-    //   country: '',
-    //   source: '',
-    //   domain: '',
-    // });
     setAdvancedSettings(false);
   };
 
@@ -116,12 +117,24 @@ const SearchForm = (props) => {
           Search News..
         </Form.Button>
         <br></br>
-        <Checkbox
-          checked={advancedSettings}
-          label={`${advancedSettings ? 'Hide' : 'Show'} Advanced Settings`}
-          onChange={() => setAdvancedSettings(!advancedSettings)}
-          toggle
-        />
+
+        <Form.Group widths='equal'>
+          <Form.Checkbox
+            checked={advancedSettings}
+            label={`${advancedSettings ? 'Hide' : 'Show'} Advanced Settings`}
+            onChange={() => setAdvancedSettings(!advancedSettings)}
+            toggle
+          />
+          <Icon
+            size='large'
+            name='remove'
+            color='grey'
+            inverted
+            onClick={clearForm}
+            style={{ cursor: 'pointer' }}
+          />
+        </Form.Group>
+
         <br></br>
         <br></br>
         {advancedSettings && (

@@ -58,7 +58,7 @@ After running above client build command, cd into the root directory and run the
 NODE_ENV=production node server.js
 ```
 
-Check in browser on [http://localhost:5000/](http://localhost:5000/)
+Check in browser on [http://localhost:3000/](http://localhost:3000/)
 
 ---
 
