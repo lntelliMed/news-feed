@@ -3,6 +3,8 @@ import { Segment, Button, Item, Header } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 import NewsArticle from './NewsArticle';
+import { capitalizeFirstLetter } from '../../utils';
+
 const NewsArticles = ({
   category = '',
   searchTerm = '',
@@ -24,13 +26,19 @@ const NewsArticles = ({
 
   return (
     <Fragment>
-      {category && <Header as='h2'>Top Headlines - {category}</Header>}
+      {category && (
+        <Header as='h2'>
+          Top Headlines - {capitalizeFirstLetter(category)}
+        </Header>
+      )}
       {page && pageSize && totalResults && (searchTerm || category) && (
         <Header as='h3'>
           {`Displaying results 1-${Math.min(
             page * pageSize,
             totalResults
-          )} out of ${totalResults} for ${searchTerm || category}`}
+          )} out of ${totalResults} for ${capitalizeFirstLetter(
+            searchTerm || category
+          )}`}
           <br></br>
           <br></br>
         </Header>

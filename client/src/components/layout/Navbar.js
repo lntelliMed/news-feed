@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import { setCategory } from '../../actions/newsFeed';
 import { categories } from '../../data/categories';
+import { capitalizeFirstLetter } from '../../utils';
 
 const Navbar = ({ setCategory, loading }) => {
   const [activeItem, setActiveItem] = useState('home');
@@ -23,11 +24,6 @@ const Navbar = ({ setCategory, loading }) => {
     }
   };
 
-  const getCategoryTitle = () =>
-    newCategory
-      ? newCategory[0].toUpperCase() + newCategory.slice(1)
-      : 'General';
-
   return (
     <div>
       <Menu pointing secondary>
@@ -39,7 +35,11 @@ const Navbar = ({ setCategory, loading }) => {
           onClick={handleItemClick}
         />
 
-        <Dropdown loading={loading} item text={getCategoryTitle()}>
+        <Dropdown
+          loading={loading}
+          item
+          text={capitalizeFirstLetter(newCategory, 'General')}
+        >
           <Dropdown.Menu>
             {categories.map((category) => (
               <Dropdown.Item
