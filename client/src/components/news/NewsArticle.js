@@ -3,6 +3,8 @@ import moment from 'moment';
 import { Button, Item } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
+import placeHolderImage from '../../img/placeholder-news.jpg';
+
 const NewsArticle = ({
   title,
   description,
@@ -27,7 +29,15 @@ const NewsArticle = ({
       )}
     </Item.Meta>
     <br></br>
-    <Item.Image src={urlToImage} alt={description} width='100%' />
+    {urlToImage ? (
+      <Item.Image src={urlToImage} alt={description} width='100%' />
+    ) : (
+      <Item.Image
+        src={placeHolderImage}
+        alt={'Place holder image'}
+        width='100%'
+      />
+    )}
 
     <Item.Content>
       <Item.Header as='h3'>{title}</Item.Header>
@@ -55,10 +65,8 @@ const NewsArticle = ({
       )}
       <br></br>
       <Item.Extra>
-        <Button>
-          <a target='_blank' href={url}>
-            Read more..
-          </a>
+        <Button primary href={url} target='_blank'>
+          Read more..
         </Button>
         <Button>Save</Button>
       </Item.Extra>

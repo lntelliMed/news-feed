@@ -4,16 +4,13 @@ import PropTypes from 'prop-types';
 
 import NotFound from '../layout/NotFound';
 import SearchNewsPage from '../layout/SearchNewsPage';
+import SavedNewsArticles from '../layout/SavedNewsArticles';
 
 const Routes = (props) => {
   return (
     <Switch>
       <Route exact path='/search' component={SearchNewsPage} />
-      <Route
-        exact
-        path='/saved-articles'
-        render={() => <h1>Saved Articles go here</h1>}
-      />
+      <Route exact path='/saved-articles' component={SavedNewsArticles} />
       <Route exact path='/login' render={() => <h1>login page go here</h1>} />
       <Route component={NotFound} />
     </Switch>

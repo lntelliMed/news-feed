@@ -64,16 +64,14 @@ const Navbar = ({ setCategory, loading }) => {
           >
             <Icon name='search' />
           </Menu.Item>
+          <Link to='/saved-articles'>
+            <Menu.Item
+              name='my articles'
+              active={activeItem === 'my articles'}
+              onClick={handleItemClick}
+            />
+          </Link>
 
-          {false && (
-            <Link to='/saved-articles'>
-              <Menu.Item
-                name='articles'
-                active={activeItem === 'articles'}
-                onClick={handleItemClick}
-              />
-            </Link>
-          )}
           {false && (
             <Link to='/login'>
               <Menu.Item
