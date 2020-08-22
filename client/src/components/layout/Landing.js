@@ -37,8 +37,8 @@ const Landing = (props) => {
           <Item.Group divided>
             {data &&
               data.map((item, index) => (
-                <Segment>
-                  <NewsItem {...item} key={index} />
+                <Segment key={index}>
+                  <NewsItem {...item} />
                 </Segment>
               ))}
           </Item.Group>

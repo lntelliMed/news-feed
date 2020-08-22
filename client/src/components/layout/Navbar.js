@@ -14,6 +14,10 @@ const Navbar = (props) => {
   const [activeItem, setActiveItem] = useState('home');
   const [newCategory, setNewCategory] = useState('general');
 
+  useEffect(() => {
+    props.setCategory(newCategory);
+  }, [newCategory]);
+
   const handleItemClick = (e, { name, value }) => {
     if (name === 'category') {
       setNewCategory(value);
@@ -22,29 +26,23 @@ const Navbar = (props) => {
     }
   };
 
-  useEffect(() => {
-    props.setCategory(newCategory);
-  }, [newCategory]);
+  const getCategoryTitle = () =>
+    newCategory
+      ? newCategory[0].toUpperCase() + newCategory.slice(1)
+      : 'General';
+
   return (
     <div>
       <Menu pointing secondary>
-        <Link to='/'>
-          <Menu.Item
-            name='home'
-            active={activeItem === 'home'}
-            onClick={handleItemClick}
-          />
-        </Link>
+        <Menu.Item
+          as={Link}
+          to='/'
+          name='home'
+          active={activeItem === 'home'}
+          onClick={handleItemClick}
+        />
 
-        <Dropdown
-          loading={props.loading}
-          item
-          text={() =>
-            newCategory
-              ? newCategory[0].toUpperCase() + newCategory.slice(1)
-              : 'General'
-          }
-        >
+        <Dropdown loading={props.loading} item text={getCategoryTitle()}>
           <Dropdown.Menu>
             {categories.map((category) => (
               <Dropdown.Item
@@ -60,15 +58,15 @@ const Navbar = (props) => {
         </Dropdown>
 
         <Menu.Menu position='right'>
-          <Link to='/search'>
-            <Menu.Item
-              name='search'
-              active={activeItem === 'search'}
-              onClick={handleItemClick}
-            >
-              <Icon name='search' />
-            </Menu.Item>
-          </Link>
+          <Menu.Item
+            as={Link}
+            to='/search'
+            name='search'
+            active={activeItem === 'search'}
+            onClick={handleItemClick}
+          >
+            <Icon name='search' />
+          </Menu.Item>
 
           {false && (
             <Link to='/saved-articles'>
