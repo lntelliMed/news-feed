@@ -2,20 +2,28 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Form, Segment, Icon } from 'semantic-ui-react';
 
-import {
-  getNews,
-  incrementPageNumber,
-  clearSearchResults,
-} from '../../actions/newsFeed';
+import { getNews, clearSearchResults } from '../../actions/newsFeed';
 import { categories as categoryOptions } from '../../data/categories';
 import { languages as languageOptions } from '../../data/languages';
 import { countries as countryOptions } from '../../data/countries';
 import { sources as sourceOptions } from '../../data/sources';
 import { domains as domainOptions } from '../../data/domains';
 import { sortBy as sortByOptions } from '../../data/sortBy';
-import SearchResultsPage from './NewsArticles';
+import NewsArticles from '../news/NewsArticles';
 
-const SearchForm = (props) => {
+const SearchNewsPage = ({
+  sources,
+  getNews,
+  searchResults,
+  totalResults,
+  loading,
+  error,
+}) => {
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [uri, setUri] = useState('everything');
+  const [advancedSettings, setAdvancedSettings] = useState(false);
+
   const [formData, setFormData] = useState({
     searchTerm: '',
     category: '',
@@ -27,40 +35,6 @@ const SearchForm = (props) => {
     source: '',
     domain: '',
   });
-  const [advancedSettings, setAdvancedSettings] = useState(false);
-  let apiNewsSources;
-  if (props.sources && props.sources.length) {
-    apiNewsSources = props.sources.map((source) => ({
-      key: source.id,
-      text: source.name,
-      value: source.id,
-    }));
-  }
-  useEffect(() => {
-    const requestObj = {
-      language: 'en',
-      uri: 'sources',
-    };
-    props.getNews(requestObj);
-  }, []);
-
-  const clearForm = () => {
-    setFormData({
-      searchTerm: '',
-      category: '',
-      sortBy: '',
-      from: '',
-      to: '',
-      language: '',
-      country: '',
-      source: '',
-      domain: '',
-    });
-    props.clearSearchResults();
-  };
-  const handleChange = (e, { name, value }) => {
-    setFormData({ ...formData, [name]: value });
-  };
 
   const {
     searchTerm,
@@ -74,35 +48,77 @@ const SearchForm = (props) => {
     domain,
   } = formData;
 
-  const requestObj = {
-    language,
-    country,
-    category,
-    uri: 'everything',
-    page: 1,
-    pageSize: 5,
-    searchTerm,
-    from,
-    to,
-    sortBy,
+  useEffect(() => {
+    const requestObj = {
+      language: 'en',
+      uri: 'sources',
+    };
+    getNews(requestObj);
+  }, []);
+
+  let apiNewsSources;
+  if (sources && sources.length) {
+    apiNewsSources = sources.map((source) => ({
+      key: source.id,
+      text: source.name,
+      value: source.id,
+    }));
+  }
+
+  const clearForm = () => {
+    setFormData({
+      searchTerm: '',
+      category: '',
+      sortBy: '',
+      from: '',
+      to: '',
+      language: '',
+      country: '',
+      source: '',
+      domain: '',
+    });
+    clearSearchResults();
   };
-  if (source) {
-    requestObj.sources = [source];
-  }
-  if (domain) {
-    requestObj.domains = [domain];
-  }
+
+  const handleChange = (e, { name, value }) => {
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const searchAllNews = () => {
+    const requestObj = {
+      language,
+      country,
+      category,
+      uri,
+      page,
+      pageSize,
+      searchTerm,
+      from,
+      to,
+      sortBy,
+    };
+    if (source) {
+      requestObj.sources = [source];
+    }
+    if (domain) {
+      requestObj.domains = [domain];
+    }
+    getNews(requestObj);
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (!formData['searchTerm'].trim()) {
+    if (!searchTerm.trim()) {
       return alert('Please enter a search term!');
     }
-
-    props.getNews(requestObj);
-
+    searchAllNews();
     setAdvancedSettings(false);
   };
+
+  useEffect(() => {
+    searchAllNews();
+  }, [page]);
 
   return (
     <Fragment>
@@ -228,28 +244,33 @@ const SearchForm = (props) => {
           </Segment>
         )}
       </Form>
-      <SearchResultsPage formData={formData} />
+      {searchResults && searchResults.length > 0 && (
+        <NewsArticles
+          searchTerm={searchTerm}
+          loading={loading}
+          newsArticles={searchResults}
+          totalResults={totalResults}
+          error={error}
+          page={page}
+          pageSize={pageSize}
+          incrementPageNumber={() => setPage(page + 1)}
+        />
+      )}
     </Fragment>
   );
 };
 
 const mapStateToProps = (state) => ({
-  news: state.newsFeed.news,
-  searchResults: state.newsFeed.news.searchResults,
   sources: state.newsFeed.news.sources,
+  searchResults: state.newsFeed.news.searchResults,
+  totalResults: state.newsFeed.totalResults,
   loading: state.newsFeed.loading,
   error: state.newsFeed.error,
-  language: state.newsFeed.params.language,
-  country: state.newsFeed.params.country,
-  uri: state.newsFeed.params.uri,
-  page: state.newsFeed.params.page,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getNews: (language, country, category, uri, page) =>
-    dispatch(getNews(language, country, category, uri, page)),
-  incrementPageNumber: () => dispatch(incrementPageNumber()),
+  getNews: (requestObj) => dispatch(getNews(requestObj)),
   clearSearchResults: () => dispatch(clearSearchResults()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchNewsPage);

@@ -2,12 +2,12 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import NotFound from '../layout/NotFound';
-import SearchForm from '../news/SearchForm';
+import SearchNewsPage from '../layout/SearchNewsPage';
 
 const Routes = (props) => {
   return (
     <Switch>
-      <Route exact path='/search' component={SearchForm} />
+      <Route exact path='/search' component={SearchNewsPage} />
       <Route
         exact
         path='/saved-articles'

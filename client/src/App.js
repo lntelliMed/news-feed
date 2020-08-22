@@ -5,7 +5,7 @@ import { Container } from 'semantic-ui-react';
 
 import store from './store';
 import Navbar from './components/layout/Navbar';
-import Landing from './components/layout/Landing';
+import LandingPage from './components/layout/LandingPage';
 import Routes from './components/routing/Routes';
 
 const App = () => {
@@ -15,7 +15,7 @@ const App = () => {
         <Container text>
           <Navbar />
           <Switch>
-            <Route exact path='/' component={Landing} />
+            <Route exact path='/' component={LandingPage} />
             <Route component={Routes} />
           </Switch>
         </Container>
