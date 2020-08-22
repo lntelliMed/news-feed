@@ -1,43 +1,53 @@
 import React from 'react';
 import moment from 'moment';
 import { Button, Item } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
-const NewsItem = (props) => (
+const NewsArticle = ({
+  title,
+  description,
+  content,
+  url,
+  urlToImage,
+  author,
+  publishedAt,
+  source: { name },
+}) => (
   <Item>
     <Item.Meta>
       <span className='cinema'>
-        <strong>{props.source.name}</strong>
-        {` - Published ${moment.utc(props.publishedAt).fromNow()}`}
+        <strong>{name}</strong>
+        {` - Published ${moment.utc(publishedAt).fromNow()}`}
       </span>
-      {props.author && (
+      {author && (
         <span>
           {' '}
-          by <em>{props.author}</em>
+          by <em>{author}</em>
         </span>
       )}
     </Item.Meta>
     <br></br>
-    <Item.Image src={props.urlToImage} alt={props.description} width='100%' />
+    <Item.Image src={urlToImage} alt={description} width='100%' />
 
     <Item.Content>
-      <Item.Header as='h3'>{props.title}</Item.Header>
+      <Item.Header as='h3'>{title}</Item.Header>
 
       <Item.Description>
-        {props.description && (
+        {description && (
           <p>
-            {props.description}{' '}
-            <a className={props.rowClass} target='_blank' href={props.url}>
+            {description}{' '}
+            <a target='_blank' href={url}>
               {' read more..'}
             </a>
           </p>
         )}
       </Item.Description>
 
-      {!props.description && props.content && (
+      {!description && content && (
         <Item.Meta>
           <p>
-            Content: {props.content}{' '}
-            <a className={props.rowClass} target='_blank' href={props.url}>
+            Content: {content}{' '}
+            <a target='_blank' href={url}>
               {' read more..'}
             </a>
           </p>
@@ -46,7 +56,7 @@ const NewsItem = (props) => (
       <br></br>
       <Item.Extra>
         <Button>
-          <a className={props.rowClass} target='_blank' href={props.url}>
+          <a target='_blank' href={url}>
             Read more..
           </a>
         </Button>
@@ -56,4 +66,15 @@ const NewsItem = (props) => (
   </Item>
 );
 
-export default NewsItem;
+NewsArticle.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  urlToImage: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  publishedAt: PropTypes.string.isRequired,
+  source: PropTypes.object.isRequired,
+};
+
+export default NewsArticle;

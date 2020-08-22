@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Form, Segment, Icon } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 import { getNews, clearSearchResults } from '../../actions/newsFeed';
 import { categories as categoryOptions } from '../../data/categories';
@@ -258,6 +259,15 @@ const SearchNewsPage = ({
       )}
     </Fragment>
   );
+};
+
+SearchNewsPage.propTypes = {
+  getNews: PropTypes.func.isRequired,
+  sources: PropTypes.array.isRequired,
+  searchResults: PropTypes.array.isRequired,
+  totalResults: PropTypes.number.isRequired,
+  error: PropTypes.object,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({

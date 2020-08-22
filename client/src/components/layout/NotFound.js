@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Header, Icon, Segment } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 const NotFound = () => (
   <Segment placeholder>
@@ -18,5 +19,7 @@ const NotFound = () => (
     </Segment.Inline>
   </Segment>
 );
+
+NotFound.propTypes = {};
 
 export default NotFound;

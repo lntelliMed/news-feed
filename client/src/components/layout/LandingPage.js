@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { getNews } from '../../actions/newsFeed';
 import Spinner from './Spinner';
@@ -48,6 +49,15 @@ const LandingPage = ({
       incrementPageNumber={() => setPage(page + 1)}
     />
   );
+};
+
+LandingPage.propTypes = {
+  getNews: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
+  news: PropTypes.array.isRequired,
+  totalResults: PropTypes.number.isRequired,
+  error: PropTypes.object,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({

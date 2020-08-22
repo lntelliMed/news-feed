@@ -1,5 +1,6 @@
 import React, { Fragment, useRef, useEffect } from 'react';
 import { Segment, Button, Item, Header } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 import NewsArticle from './NewsArticle';
 const NewsArticles = ({
@@ -62,6 +63,18 @@ const NewsArticles = ({
         )}
     </Fragment>
   );
+};
+
+NewsArticles.propTypes = {
+  category: PropTypes.string.isRequired,
+  searchTerm: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+  newsArticles: PropTypes.array.isRequired,
+  totalResults: PropTypes.number.isRequired,
+  error: PropTypes.object,
+  page: PropTypes.number.isRequired,
+  pageSize: PropTypes.number.isRequired,
+  incrementPageNumber: PropTypes.func.isRequired,
 };
 
 export default NewsArticles;

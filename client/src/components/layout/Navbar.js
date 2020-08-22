@@ -2,20 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Menu, Icon, Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import {
-  getNews,
-  incrementPageNumber,
-  setCategory,
-} from '../../actions/newsFeed';
+import { setCategory } from '../../actions/newsFeed';
 import { categories } from '../../data/categories';
 
-const Navbar = (props) => {
+const Navbar = ({ setCategory, loading }) => {
   const [activeItem, setActiveItem] = useState('home');
   const [newCategory, setNewCategory] = useState('general');
 
   useEffect(() => {
-    props.setCategory(newCategory);
+    setCategory(newCategory);
   }, [newCategory]);
 
   const handleItemClick = (e, { name, value }) => {
@@ -42,7 +39,7 @@ const Navbar = (props) => {
           onClick={handleItemClick}
         />
 
-        <Dropdown loading={props.loading} item text={getCategoryTitle()}>
+        <Dropdown loading={loading} item text={getCategoryTitle()}>
           <Dropdown.Menu>
             {categories.map((category) => (
               <Dropdown.Item
@@ -92,20 +89,16 @@ const Navbar = (props) => {
   );
 };
 
+Navbar.propTypes = {
+  setCategory: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+};
+
 const mapStateToProps = (state) => ({
-  news: state.newsFeed.news,
   loading: state.newsFeed.loading,
-  error: state.newsFeed.error,
-  language: state.newsFeed.params.language,
-  country: state.newsFeed.params.country,
-  uri: state.newsFeed.params.uri,
-  page: state.newsFeed.params.page,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getNews: (language, country, category, uri, page) =>
-    dispatch(getNews(language, country, category, uri, page)),
-  incrementPageNumber: () => dispatch(incrementPageNumber()),
   setCategory: (category) => dispatch(setCategory(category)),
 });
 
