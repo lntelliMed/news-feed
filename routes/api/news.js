@@ -58,6 +58,22 @@ router.get('/v2/top-headlines', async (req, res) => {
 });
 
 router.get('/v2/everything', async (req, res) => {
+  // ******  SAMPLE EVERYTHING REQUEST ******* //
+  // To query /v2/everything
+  // You must include at least one q, source, or
+  // domain:
+  // ***************************************** //
+  // {
+  //   q: 'bitcoin',
+  //   sources: 'bbc-news,the-verge',
+  //   domains: 'bbc.co.uk, echcrunch.com',
+  //   from: '2017-12-01',
+  //   to: '2017-12-12',
+  //   language: 'en',
+  //   sortBy: 'relevancy',
+  //   page: 2
+  // }
+  // ***************************************** //
   try {
     const {
       country,
@@ -94,6 +110,16 @@ router.get('/v2/everything', async (req, res) => {
 });
 
 router.get('/v2/sources', async (req, res) => {
+  // *******   SAMPLE SOURCES REQUEST  ******* //
+  // To query sources
+  // All options are optional
+  // ***************************************** //
+  // {
+  //   category: 'technology',
+  //   language: 'en',
+  //   country: 'us'
+  // }
+  // ***************************************** //
   try {
     const {
       country,

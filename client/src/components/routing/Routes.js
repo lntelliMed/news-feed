@@ -10,7 +10,6 @@ const Routes = () => {
     <Switch>
       <Route exact path='/search' component={SearchNewsPage} />
       <Route exact path='/saved-articles' component={SavedNewsArticles} />
-      <Route exact path='/login' render={() => <h1>login page go here</h1>} />
       <Route component={NotFound} />
     </Switch>
   );

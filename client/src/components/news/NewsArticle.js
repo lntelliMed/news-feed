@@ -65,7 +65,7 @@ const NewsArticle = ({
       )}
       <br></br>
       <Item.Extra>
-        <Button primary href={url} target='_blank'>
+        <Button primary href={url} target='_blank' rel='noopener noreferrer'>
           Read more..
         </Button>
         <Button>Save</Button>

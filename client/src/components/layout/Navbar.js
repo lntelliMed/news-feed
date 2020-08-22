@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, Icon, Dropdown } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -8,12 +8,15 @@ import { setCategory } from '../../actions/newsFeed';
 import { categories } from '../../data/categories';
 import { capitalizeFirstLetter } from '../../utils';
 
-const Navbar = ({ setCategory, loading }) => {
+const Navbar = ({ setCategory, loading, history }) => {
   const [activeItem, setActiveItem] = useState('home');
   const [newCategory, setNewCategory] = useState('general');
 
   useEffect(() => {
     setCategory(newCategory);
+    if (history) {
+      history.push('/');
+    }
   }, [newCategory, setCategory]);
 
   const handleItemClick = (e, { name, value }) => {
@@ -90,4 +93,4 @@ const mapDispatchToProps = (dispatch) => ({
   setCategory: (category) => dispatch(setCategory(category)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));

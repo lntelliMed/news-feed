@@ -17,6 +17,7 @@ const NewsArticles = ({
   incrementPageNumber,
 }) => {
   const resultsEndRef = useRef(null);
+
   const scrollToBottom = () => {
     if (resultsEndRef && resultsEndRef.current && page > 1) {
       resultsEndRef.current.scrollIntoView({ behavior: 'smooth' });

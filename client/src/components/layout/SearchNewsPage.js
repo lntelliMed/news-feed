@@ -25,6 +25,19 @@ const SearchNewsPage = ({
   const [uri, setUri] = useState('everything');
   const [advancedSettings, setAdvancedSettings] = useState(false);
 
+  // Initialize sources dropdown!
+  useEffect(() => {
+    const requestObj = {
+      language: 'en',
+      uri: 'sources',
+    };
+    getNews(requestObj);
+  }, [getNews]);
+
+  useEffect(() => {
+    searchAllNews();
+  }, [page]);
+
   const [formData, setFormData] = useState({
     searchTerm: '',
     category: '',
@@ -48,14 +61,6 @@ const SearchNewsPage = ({
     source,
     domain,
   } = formData;
-
-  useEffect(() => {
-    const requestObj = {
-      language: 'en',
-      uri: 'sources',
-    };
-    getNews(requestObj);
-  }, [getNews]);
 
   let apiNewsSources;
   if (sources && sources.length) {
@@ -117,10 +122,6 @@ const SearchNewsPage = ({
     searchAllNews();
     setAdvancedSettings(false);
   };
-
-  useEffect(() => {
-    searchAllNews();
-  }, [page]);
 
   return (
     <Fragment>
