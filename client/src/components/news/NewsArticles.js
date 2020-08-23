@@ -89,7 +89,7 @@ NewsArticles.propTypes = {
   searchTerm: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   newsArticles: PropTypes.array.isRequired,
-  totalResults: PropTypes.number.isRequired,
+  totalResults: PropTypes.number,
   error: PropTypes.any,
   page: PropTypes.number.isRequired,
   pageSize: PropTypes.number.isRequired,

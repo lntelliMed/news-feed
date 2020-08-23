@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { Button, Item } from 'semantic-ui-react';
+import { Button, Item, Icon } from 'semantic-ui-react';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 
@@ -105,18 +105,29 @@ const NewsArticle = ({
         )}
         <br></br>
         <Item.Extra>
-          <Button primary href={url} target='_blank' rel='noopener noreferrer'>
-            Read more..
-          </Button>
-          <Button
-            onClick={handeArticleSave}
-            color='red'
-            disabled={isSaving}
-            loading={isSaving}
-            positive={isSaved}
-          >
-            {!isSaved ? 'Save Article' : 'Item Saved!'}
-          </Button>
+          <Button.Group>
+            <Button
+              primary
+              href={url}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <Icon name='edge' />
+              Read more..
+            </Button>
+            <Button.Or />
+
+            <Button
+              negative={!isSaved}
+              positive={isSaved}
+              onClick={handeArticleSave}
+              disabled={isSaving}
+              loading={isSaving}
+            >
+              <Icon name='heart' color={isSaved && 'red'} />
+              {!isSaved ? 'Save Article' : 'Item Saved!'}
+            </Button>
+          </Button.Group>
         </Item.Extra>
       </Item.Content>
     </Item>

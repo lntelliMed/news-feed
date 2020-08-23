@@ -90,11 +90,7 @@ export const setNewsSortBy = (sortBy) => ({
   sortBy,
 });
 
-export const getNewsSuccess = (
-  articles,
-  category = 'general',
-  totalResults
-) => {
+export const getNewsSuccess = (articles, category, totalResults) => {
   const data = { articles, category, totalResults };
   return {
     type: GET_NEWS_SUCCESS,

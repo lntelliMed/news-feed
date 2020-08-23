@@ -30,7 +30,8 @@ const LandingPage = ({
     const requestObj = {
       language,
       country,
-      category,
+      // use default category in case there is a delay with value retrieval from Navbar!
+      category: category || 'general',
       uri,
       page: page,
       pageSize,
@@ -65,7 +66,7 @@ LandingPage.propTypes = {
   deleteSavedArticle: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
   news: PropTypes.any,
-  totalResults: PropTypes.number.isRequired,
+  totalResults: PropTypes.number,
   error: PropTypes.any,
   loading: PropTypes.bool.isRequired,
 };
