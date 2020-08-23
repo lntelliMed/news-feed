@@ -1,2 +1,7 @@
-export const capitalizeFirstLetter = (str, defaultStr) =>
-  str ? str[0].toUpperCase() + str.slice(1) : defaultStr;
+export const capitalizeFirstLetter = (str, defaultStr) => {
+  const word = str || defaultStr;
+  if (!word) {
+    return '';
+  }
+  return word[0].toUpperCase() + word.slice(1);
+};
