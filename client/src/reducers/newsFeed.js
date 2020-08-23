@@ -36,6 +36,7 @@ const intialState = {
     savedArticles: [],
   },
   totalResults: 0,
+  totalSavedArticles: 0,
   loading: true,
   error: {},
   params: {
@@ -184,7 +185,7 @@ export default (state = intialState, action) => {
         ...state,
         loading: false,
         error: null,
-        totalResults: action.data.totalResults,
+        totalSavedArticles: action.data.totalSavedArticles,
         news: {
           ...state.news,
           // [action.data.category]: savedArticlesArray,
@@ -201,7 +202,7 @@ export default (state = intialState, action) => {
         ...state,
         loading: false,
         error: null,
-        totalResults: action.data.totalResults,
+        totalSavedArticles: action.data.totalSavedArticles,
         news: {
           ...state.news,
           [action.data.category]: postAdditionSavedArticlesArray,
@@ -218,7 +219,7 @@ export default (state = intialState, action) => {
         ...state,
         loading: false,
         error: null,
-        totalResults: action.data.totalResults,
+        totalSavedArticles: action.data.totalSavedArticles,
         news: {
           ...state.news,
           [action.data.category]: postDeletionSavedArticlesArray,

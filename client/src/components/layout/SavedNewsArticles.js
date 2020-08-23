@@ -15,6 +15,7 @@ import placeHolderImage from '../../img/placeholder-news.jpg';
 
 const SavedNewsArticles = ({
   savedArticles,
+  totalSavedArticles,
   getSavedArticles,
   deleteSavedArticle,
   loading,
@@ -25,77 +26,88 @@ const SavedNewsArticles = ({
 
   return (
     <Fragment>
-      <Header as='h3'>Your saved articles:</Header>
-      <Divider />
-      <Card.Group itemsPerRow={3} stackable>
-        {savedArticles.map((article) => (
-          <Card key={article.id}>
-            {loading ? (
-              <Placeholder>
-                <Placeholder.Image square />
-              </Placeholder>
-            ) : (
-              <Image
-                src={article.urlToImage || placeHolderImage}
-                alt={article.title}
-                as='a'
-                target='_blank'
-                href={article.url}
-                rel='noopener noreferrer'
-              />
-            )}
+      {savedArticles && savedArticles.length > 0 ? (
+        <Fragment>
+          <Header as='h3'>
+            Your saved articles (total of {totalSavedArticles}):
+          </Header>
+          <Divider />
+          <Card.Group itemsPerRow={3} stackable>
+            {savedArticles.map((article) => (
+              <Card key={article.id}>
+                {loading ? (
+                  <Placeholder>
+                    <Placeholder.Image square />
+                  </Placeholder>
+                ) : (
+                  <Image
+                    src={article.urlToImage || placeHolderImage}
+                    alt={article.title}
+                    as='a'
+                    target='_blank'
+                    href={article.url}
+                    rel='noopener noreferrer'
+                  />
+                )}
 
-            <Card.Content>
-              {loading ? (
-                <Placeholder>
-                  <Placeholder.Header>
-                    <Placeholder.Line length='very short' />
-                    <Placeholder.Line length='medium' />
-                  </Placeholder.Header>
-                  <Placeholder.Paragraph>
-                    <Placeholder.Line length='short' />
-                  </Placeholder.Paragraph>
-                </Placeholder>
-              ) : (
-                <Fragment>
-                  <Card.Header>{shortenString(article.title, 20)}</Card.Header>
-                  <Card.Meta>{formatDate(article.publishedAt)}</Card.Meta>
-                  <Card.Description>
-                    {shortenString(article.description, 40)}
-                  </Card.Description>
-                </Fragment>
-              )}
-            </Card.Content>
+                <Card.Content>
+                  {loading ? (
+                    <Placeholder>
+                      <Placeholder.Header>
+                        <Placeholder.Line length='very short' />
+                        <Placeholder.Line length='medium' />
+                      </Placeholder.Header>
+                      <Placeholder.Paragraph>
+                        <Placeholder.Line length='short' />
+                      </Placeholder.Paragraph>
+                    </Placeholder>
+                  ) : (
+                    <Fragment>
+                      <Card.Header>
+                        {shortenString(article.title, 20)}
+                      </Card.Header>
+                      <Card.Meta>{formatDate(article.publishedAt)}</Card.Meta>
+                      <Card.Description>
+                        {shortenString(article.description, 40)}
+                      </Card.Description>
+                    </Fragment>
+                  )}
+                </Card.Content>
 
-            <Card.Content extra>
-              <Button
-                disabled={loading}
-                primary
-                href={article.url}
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                Read
-              </Button>
-              <Button
-                disabled={loading}
-                onClick={(e) => {
-                  deleteSavedArticle(article.id);
-                  getSavedArticles();
-                }}
-              >
-                Delete
-              </Button>
-            </Card.Content>
-          </Card>
-        ))}
-      </Card.Group>
+                <Card.Content extra>
+                  <Button
+                    disabled={loading}
+                    primary
+                    href={article.url}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    Read
+                  </Button>
+                  <Button
+                    disabled={loading}
+                    onClick={(e) => {
+                      deleteSavedArticle(article.id);
+                      getSavedArticles();
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Card.Content>
+              </Card>
+            ))}
+          </Card.Group>
+        </Fragment>
+      ) : (
+        <Header as='h3'>You have no saved articles!</Header>
+      )}
     </Fragment>
   );
 };
 
 const mapStateToProps = (state) => ({
   savedArticles: state.newsFeed.news.savedArticles,
+  totalSavedArticles: state.newsFeed.totalSavedArticles,
   loading: state.newsFeed.loading,
 });
 

@@ -195,8 +195,12 @@ export const checkResponseForErrors = (response) => {
   return response;
 };
 
-export const getSavedArticlesSuccess = (articles, category, totalResults) => {
-  const data = { articles, category, totalResults };
+export const getSavedArticlesSuccess = (
+  articles,
+  category,
+  totalSavedArticles
+) => {
+  const data = { articles, category, totalSavedArticles };
   return {
     type: GET_SAVED_ARTICLES_SUCCESS,
     data,
@@ -214,8 +218,8 @@ export const getSavedArticles = () => (dispatch) => {
   );
 };
 
-export const saveArticleSuccess = (article, category, totalResults) => {
-  const data = { article, category, totalResults };
+export const saveArticleSuccess = (article, category, totalSavedArticles) => {
+  const data = { article, category, totalSavedArticles };
   return {
     type: SAVE_ARTICLE_SUCCESS,
     data,
@@ -238,9 +242,9 @@ export const saveArticle = (article) => (dispatch) => {
 export const deleteSavedArticleSuccess = (
   articleId,
   category,
-  totalResults
+  totalSavedArticles
 ) => {
-  const data = { articleId, category, totalResults };
+  const data = { articleId, category, totalSavedArticles };
   return {
     type: DELETE_SAVED_ARTICLE_SUCCESS,
     data,
