@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import {
   Button,
   Card,
@@ -6,6 +6,7 @@ import {
   Image,
   Placeholder,
   Header,
+  Confirm,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -24,6 +25,8 @@ const SavedNewsArticles = ({
   useEffect(() => {
     getSavedArticles();
   }, []);
+
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   return (
     <Fragment>
@@ -50,7 +53,6 @@ const SavedNewsArticles = ({
                     rel='noopener noreferrer'
                   />
                 )}
-
                 <Card.Content>
                   {loading ? (
                     <Placeholder>
@@ -75,6 +77,21 @@ const SavedNewsArticles = ({
                   )}
                 </Card.Content>
 
+                <Confirm
+                  header='Delete Article'
+                  content='This will delete the article from your local storage permanently. Are you sure?'
+                  dimmer='blurring'
+                  size='tiny'
+                  open={showConfirmModal}
+                  cancelButton='Cancel'
+                  confirmButton='OK'
+                  onCancel={() => setShowConfirmModal(false)}
+                  onConfirm={() => {
+                    setShowConfirmModal(false);
+                    deleteSavedArticle(article.id);
+                    getSavedArticles();
+                  }}
+                />
                 <Card.Content extra>
                   <Button
                     disabled={loading}
@@ -87,10 +104,7 @@ const SavedNewsArticles = ({
                   </Button>
                   <Button
                     disabled={loading}
-                    onClick={(e) => {
-                      deleteSavedArticle(article.id);
-                      getSavedArticles();
-                    }}
+                    onClick={(e) => setShowConfirmModal(true)}
                   >
                     Delete
                   </Button>
