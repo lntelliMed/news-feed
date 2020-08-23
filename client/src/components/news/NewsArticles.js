@@ -11,6 +11,7 @@ const NewsArticles = ({
   loading,
   newsArticles,
   totalResults,
+  totalSavedArticles,
   error,
   page,
   pageSize,
@@ -57,6 +58,7 @@ const NewsArticles = ({
                 {...article}
                 saveArticle={saveArticle}
                 deleteSavedArticle={deleteSavedArticle}
+                totalSavedArticles={totalSavedArticles}
               />
             </Segment>
           ))}
@@ -90,6 +92,7 @@ NewsArticles.propTypes = {
   loading: PropTypes.bool.isRequired,
   newsArticles: PropTypes.array.isRequired,
   totalResults: PropTypes.number,
+  totalSavedArticles: PropTypes.number,
   error: PropTypes.any,
   page: PropTypes.number.isRequired,
   pageSize: PropTypes.number.isRequired,

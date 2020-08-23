@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { Button, Item, Icon } from 'semantic-ui-react';
+import { Button, Item, Icon, Label } from 'semantic-ui-react';
 import { v4 as uuidv4 } from 'uuid';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import placeHolderImage from '../../img/placeholder-news.jpg';
@@ -16,6 +17,7 @@ const NewsArticle = ({
   author,
   publishedAt,
   source: { name },
+  totalSavedArticles,
 }) => {
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -118,16 +120,30 @@ const NewsArticle = ({
             <Button.Or />
 
             <Button
-              negative={!isSaved}
+              negative={isSaved}
               positive={isSaved}
+              positive
               onClick={handeArticleSave}
               disabled={isSaving}
               loading={isSaving}
             >
-              <Icon name='heart' color={isSaved && 'red'} />
+              <Icon name='heart' inverted loading={isSaving} />
               {!isSaved ? 'Save Article' : 'Item Saved!'}
             </Button>
           </Button.Group>
+          <Button
+            as={Link}
+            to='/saved-articles'
+            labelPosition='right'
+            floated='right'
+          >
+            <Button color='red'>
+              <Icon name='heart' />
+            </Button>
+            <Label basic color='red' pointing='left'>
+              {totalSavedArticles}
+            </Label>
+          </Button>
         </Item.Extra>
       </Item.Content>
     </Item>
@@ -144,6 +160,7 @@ NewsArticle.propTypes = {
   author: PropTypes.string,
   publishedAt: PropTypes.string.isRequired,
   source: PropTypes.object.isRequired,
+  totalSavedArticles: PropTypes.number,
 };
 
 export default NewsArticle;

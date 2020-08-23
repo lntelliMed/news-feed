@@ -92,6 +92,7 @@ const SearchNewsPage = ({
       domain: '',
     });
     clearSearchResults();
+    setPage(1);
   };
 
   const handleChange = (e, { name, value }) => {
@@ -127,6 +128,7 @@ const SearchNewsPage = ({
       return alert('Please enter a search term!');
     }
     clearSearchResults();
+    setPage(1);
     searchAllNews();
     setAdvancedSettings(false);
   };

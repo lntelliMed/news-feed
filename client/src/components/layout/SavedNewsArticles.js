@@ -7,6 +7,8 @@ import {
   Placeholder,
   Header,
   Confirm,
+  Icon,
+  Label,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -32,9 +34,16 @@ const SavedNewsArticles = ({
     <Fragment>
       {savedArticles && savedArticles.length > 0 ? (
         <Fragment>
-          <Header as='h3'>
-            Your saved articles (total of {totalSavedArticles}):
-          </Header>
+          <Header as='h3'>Your saved articles:</Header>
+          <Button as='div' labelPosition='right'>
+            <Button color='red'>
+              <Icon name='heart' />
+              Liked
+            </Button>
+            <Label basic color='red' pointing='left'>
+              {totalSavedArticles}
+            </Label>
+          </Button>
           <Divider />
           <Card.Group itemsPerRow={3} stackable>
             {savedArticles.map((article) => (
@@ -80,7 +89,7 @@ const SavedNewsArticles = ({
                 <Confirm
                   header='Delete Article'
                   content='This will delete the article from your local storage permanently. Are you sure?'
-                  dimmer='blurring'
+                  dimmer='inverted'
                   size='tiny'
                   open={showConfirmModal}
                   cancelButton='Cancel'

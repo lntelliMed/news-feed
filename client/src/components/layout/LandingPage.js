@@ -17,6 +17,7 @@ const LandingPage = ({
   category,
   news,
   totalResults,
+  totalSavedArticles,
   error,
   loading,
 }) => {
@@ -50,6 +51,7 @@ const LandingPage = ({
       loading={loading}
       newsArticles={newsArticles}
       totalResults={totalResults}
+      totalSavedArticles={totalSavedArticles}
       error={error}
       page={page}
       pageSize={pageSize}
@@ -67,6 +69,7 @@ LandingPage.propTypes = {
   category: PropTypes.string.isRequired,
   news: PropTypes.any,
   totalResults: PropTypes.number,
+  totalSavedArticles: PropTypes.number,
   error: PropTypes.any,
   loading: PropTypes.bool.isRequired,
 };
@@ -74,6 +77,7 @@ LandingPage.propTypes = {
 const mapStateToProps = (state) => ({
   news: state.newsFeed.news,
   totalResults: state.newsFeed.totalResults,
+  totalSavedArticles: state.newsFeed.totalSavedArticles,
   loading: state.newsFeed.loading,
   error: state.newsFeed.error,
   category: state.newsFeed.params.category,
