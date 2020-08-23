@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import { Form, Segment, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
-import { getNews, clearSearchResults } from '../../actions/newsFeed';
+import {
+  getNews,
+  clearSearchResults,
+  saveArticle,
+  deleteSavedArticle,
+} from '../../actions/newsFeed';
 import { categories as categoryOptions } from '../../data/categories';
 import { languages as languageOptions } from '../../data/languages';
 import { countries as countryOptions } from '../../data/countries';
@@ -17,6 +22,8 @@ const SearchNewsPage = ({
   getNews,
   searchResults,
   totalResults,
+  saveArticle,
+  deleteSavedArticle,
   loading,
   error,
 }) => {
@@ -256,6 +263,8 @@ const SearchNewsPage = ({
           error={error}
           page={page}
           pageSize={pageSize}
+          saveArticle={saveArticle}
+          deleteSavedArticle={deleteSavedArticle}
           incrementPageNumber={() => setPage(page + 1)}
         />
       )}
@@ -268,6 +277,8 @@ SearchNewsPage.propTypes = {
   sources: PropTypes.array.isRequired,
   searchResults: PropTypes.array,
   totalResults: PropTypes.number,
+  saveArticle: PropTypes.func.isRequired,
+  deleteSavedArticle: PropTypes.func.isRequired,
   error: PropTypes.any,
   loading: PropTypes.bool.isRequired,
 };
@@ -283,6 +294,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getNews: (requestObj) => dispatch(getNews(requestObj)),
   clearSearchResults: () => dispatch(clearSearchResults()),
+  saveArticle: (article) => dispatch(saveArticle(article)),
+  deleteSavedArticle: (articleId) => dispatch(deleteSavedArticle(articleId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchNewsPage);

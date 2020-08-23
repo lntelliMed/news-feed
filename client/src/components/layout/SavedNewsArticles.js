@@ -8,6 +8,7 @@ import {
   Header,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { getSavedArticles, deleteSavedArticle } from '../../actions/newsFeed';
 import { shortenString, formatDate } from '../../utils';
@@ -103,6 +104,14 @@ const SavedNewsArticles = ({
       )}
     </Fragment>
   );
+};
+
+SavedNewsArticles.propTypes = {
+  savedArticles: PropTypes.array,
+  totalSavedArticles: PropTypes.number,
+  getSavedArticles: PropTypes.func.isRequired,
+  deleteSavedArticle: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
