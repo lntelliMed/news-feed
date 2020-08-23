@@ -30,12 +30,24 @@ const NewsArticle = ({
     </Item.Meta>
     <br></br>
     {urlToImage ? (
-      <Item.Image src={urlToImage} alt={description} width='100%' />
+      <Item.Image
+        src={urlToImage}
+        alt={description}
+        width='100%'
+        as='a'
+        target='_blank'
+        href={url}
+        rel='noopener noreferrer'
+      />
     ) : (
       <Item.Image
         src={placeHolderImage}
         alt={'Place holder image'}
         width='100%'
+        as='a'
+        target='_blank'
+        href={url}
+        rel='noopener noreferrer'
       />
     )}
 
