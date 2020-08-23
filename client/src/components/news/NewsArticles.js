@@ -14,6 +14,8 @@ const NewsArticles = ({
   error,
   page,
   pageSize,
+  saveArticle,
+  deleteSavedArticle,
   incrementPageNumber,
 }) => {
   const resultsEndRef = useRef(null);
@@ -47,9 +49,13 @@ const NewsArticles = ({
       <Item.Group divided>
         {newsArticles &&
           newsArticles.length > 0 &&
-          newsArticles.map((item, index) => (
+          newsArticles.map((article, index) => (
             <Segment key={index}>
-              <NewsArticle {...item} />
+              <NewsArticle
+                {...article}
+                saveArticle={saveArticle}
+                deleteSavedArticle={deleteSavedArticle}
+              />
             </Segment>
           ))}
       </Item.Group>
@@ -83,6 +89,8 @@ NewsArticles.propTypes = {
   error: PropTypes.any,
   page: PropTypes.number.isRequired,
   pageSize: PropTypes.number.isRequired,
+  saveArticle: PropTypes.func.isRequired,
+  deleteSavedArticle: PropTypes.func.isRequired,
   incrementPageNumber: PropTypes.func.isRequired,
 };
 

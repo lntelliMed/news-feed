@@ -206,7 +206,7 @@ export const getSavedArticlesSuccess = (articles, category, totalResults) => {
 export const getSavedArticles = () => (dispatch) => {
   let articles = [];
   const savedArticles = JSON.parse(localStorage.getItem('articles'));
-  if (savedArticles && savedArticles.length) {
+  if (savedArticles && savedArticles.length > 0) {
     articles = savedArticles;
   }
   return dispatch(
@@ -225,11 +225,11 @@ export const saveArticleSuccess = (article, category, totalResults) => {
 export const saveArticle = (article) => (dispatch) => {
   let articles = [];
   const savedArticles = JSON.parse(localStorage.getItem('articles'));
-  if (savedArticles && savedArticles.length) {
+  if (savedArticles && savedArticles.length > 0) {
     articles = savedArticles;
   }
   articles.push(article);
-  localStorage.setItem('employees', JSON.stringify(articles));
+  localStorage.setItem('articles', JSON.stringify(articles));
   return dispatch(
     saveArticleSuccess(article, 'savedArticles', articles.length)
   );
@@ -252,7 +252,7 @@ export const deleteSavedArticle = (articleId) => (dispatch) => {
   const savedArticles = JSON.parse(localStorage.getItem('articles'));
   if (savedArticles && savedArticles.length > 0) {
     articles = savedArticles.filter((article) => article.id !== articleId);
-    localStorage.setItem('employees', JSON.stringify(articles));
+    localStorage.setItem('articles', JSON.stringify(articles));
   }
 
   return dispatch(

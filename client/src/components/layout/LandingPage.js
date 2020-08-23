@@ -2,12 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getNews } from '../../actions/newsFeed';
+import {
+  getNews,
+  saveArticle,
+  deleteSavedArticle,
+} from '../../actions/newsFeed';
 import Spinner from './Spinner';
 import NewsArticles from '../news/NewsArticles';
 
 const LandingPage = ({
   getNews,
+  saveArticle,
+  deleteSavedArticle,
   category,
   news,
   totalResults,
@@ -46,6 +52,8 @@ const LandingPage = ({
       error={error}
       page={page}
       pageSize={pageSize}
+      saveArticle={saveArticle}
+      deleteSavedArticle={deleteSavedArticle}
       incrementPageNumber={() => setPage(page + 1)}
     />
   );
@@ -53,6 +61,8 @@ const LandingPage = ({
 
 LandingPage.propTypes = {
   getNews: PropTypes.func.isRequired,
+  saveArticle: PropTypes.func.isRequired,
+  deleteSavedArticle: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
   news: PropTypes.any,
   totalResults: PropTypes.number.isRequired,
@@ -70,6 +80,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getNews: (requestObj) => dispatch(getNews(requestObj)),
+  saveArticle: (article) => dispatch(saveArticle(article)),
+  deleteSavedArticle: (articleId) => dispatch(deleteSavedArticle(articleId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

@@ -176,10 +176,10 @@ export default (state = intialState, action) => {
       };
     }
     case GET_SAVED_ARTICLES_SUCCESS:
-      const savedArticlesArray = [
-        ...state.news[action.data.category],
-        ...action.data.articles,
-      ];
+      // const savedArticlesArray = [
+      //   ...state.news[action.data.category],
+      //   ...action.data.articles,
+      // ];
       return {
         ...state,
         loading: false,
@@ -187,7 +187,8 @@ export default (state = intialState, action) => {
         totalResults: action.data.totalResults,
         news: {
           ...state.news,
-          [action.data.category]: savedArticlesArray,
+          // [action.data.category]: savedArticlesArray,
+          [action.data.category]: action.data.articles,
         },
       };
 

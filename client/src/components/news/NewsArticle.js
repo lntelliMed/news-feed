@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import { Button, Item } from 'semantic-ui-react';
+import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 
 import placeHolderImage from '../../img/placeholder-news.jpg';
 
 const NewsArticle = ({
+  saveArticle,
   title,
   description,
   content,
@@ -14,79 +16,115 @@ const NewsArticle = ({
   author,
   publishedAt,
   source: { name },
-}) => (
-  <Item>
-    <Item.Meta>
-      <span className='cinema'>
-        <strong>{name}</strong>
-        {` - Published ${moment.utc(publishedAt).fromNow()}`}
-      </span>
-      {author && (
-        <span>
-          {' '}
-          by <em>{author}</em>
+}) => {
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+
+  const handeArticleSave = () => {
+    saveArticle({
+      id: uuidv4(),
+      title,
+      description,
+      content,
+      url,
+      urlToImage,
+      author,
+      publishedAt,
+      name,
+    });
+    setIsSaving(true);
+
+    setTimeout(() => {
+      setIsSaving(false);
+      setIsSaved(true);
+      setTimeout(() => {
+        setIsSaved(false);
+      }, 2000);
+    }, 2000);
+  };
+  return (
+    <Item>
+      <Item.Meta>
+        <span className='cinema'>
+          <strong>{name}</strong>
+          {` - Published ${moment.utc(publishedAt).fromNow()}`}
         </span>
-      )}
-    </Item.Meta>
-    <br></br>
-    {urlToImage ? (
-      <Item.Image
-        src={urlToImage}
-        alt={description}
-        width='100%'
-        as='a'
-        target='_blank'
-        href={url}
-        rel='noopener noreferrer'
-      />
-    ) : (
-      <Item.Image
-        src={placeHolderImage}
-        alt={'Place holder image'}
-        width='100%'
-        as='a'
-        target='_blank'
-        href={url}
-        rel='noopener noreferrer'
-      />
-    )}
-
-    <Item.Content>
-      <Item.Header as='h3'>{title}</Item.Header>
-
-      <Item.Description>
-        {description && (
-          <p>
-            {description}{' '}
-            <a target='_blank' href={url} rel='noopener noreferrer'>
-              {' read more..'}
-            </a>
-          </p>
+        {author && (
+          <span>
+            {' '}
+            by <em>{author}</em>
+          </span>
         )}
-      </Item.Description>
-
-      {!description && content && (
-        <Item.Meta>
-          <p>
-            Content: {content}{' '}
-            <a target='_blank' href={url} rel='noopener noreferrer'>
-              {' read more..'}
-            </a>
-          </p>
-        </Item.Meta>
-      )}
+      </Item.Meta>
       <br></br>
-      <Item.Extra>
-        <Button primary href={url} target='_blank' rel='noopener noreferrer'>
-          Read more..
-        </Button>
-        <Button>Save</Button>
-      </Item.Extra>
-    </Item.Content>
-  </Item>
-);
+      {urlToImage ? (
+        <Item.Image
+          src={urlToImage}
+          alt={description}
+          width='100%'
+          as='a'
+          target='_blank'
+          href={url}
+          rel='noopener noreferrer'
+        />
+      ) : (
+        <Item.Image
+          src={placeHolderImage}
+          alt={'Place holder image'}
+          width='100%'
+          as='a'
+          target='_blank'
+          href={url}
+          rel='noopener noreferrer'
+        />
+      )}
+
+      <Item.Content>
+        <Item.Header as='h3'>{title}</Item.Header>
+
+        <Item.Description>
+          {description && (
+            <p>
+              {description}{' '}
+              <a target='_blank' href={url} rel='noopener noreferrer'>
+                {' read more..'}
+              </a>
+            </p>
+          )}
+        </Item.Description>
+
+        {!description && content && (
+          <Item.Meta>
+            <p>
+              Content: {content}{' '}
+              <a target='_blank' href={url} rel='noopener noreferrer'>
+                {' read more..'}
+              </a>
+            </p>
+          </Item.Meta>
+        )}
+        <br></br>
+        <Item.Extra>
+          <Button primary href={url} target='_blank' rel='noopener noreferrer'>
+            Read more..
+          </Button>
+          <Button
+            onClick={handeArticleSave}
+            color='red'
+            disabled={isSaving}
+            loading={isSaving}
+            positive={isSaved}
+          >
+            {!isSaved ? 'Save Article' : 'Item Saved!'}
+          </Button>
+        </Item.Extra>
+      </Item.Content>
+    </Item>
+  );
+};
 
 NewsArticle.propTypes = {
+  saveArticle: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   content: PropTypes.string,
