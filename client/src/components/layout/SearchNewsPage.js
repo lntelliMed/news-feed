@@ -20,6 +20,7 @@ import NewsArticles from '../news/NewsArticles';
 const SearchNewsPage = ({
   sources,
   getNews,
+  clearSearchResults,
   searchResults,
   totalResults,
   saveArticle,
@@ -274,6 +275,7 @@ const SearchNewsPage = ({
 
 SearchNewsPage.propTypes = {
   getNews: PropTypes.func.isRequired,
+  clearSearchResults: PropTypes.func.isRequired,
   sources: PropTypes.array.isRequired,
   searchResults: PropTypes.array,
   totalResults: PropTypes.number,

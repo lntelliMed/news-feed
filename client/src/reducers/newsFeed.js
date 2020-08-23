@@ -83,6 +83,7 @@ export default (state = intialState, action) => {
         },
       };
     case CLEAR_SEARCH_RESULTS:
+      console.log('deleting search results', state, state.news.searchResults);
       return {
         ...state,
         loading: false,

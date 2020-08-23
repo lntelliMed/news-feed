@@ -1,5 +1,5 @@
 import React, { Fragment, useRef, useEffect } from 'react';
-import { Segment, Button, Item, Header } from 'semantic-ui-react';
+import { Segment, Button, Item, Header, Divider } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 import NewsArticle from './NewsArticle';
@@ -34,6 +34,8 @@ const NewsArticles = ({
           Top Headlines - {capitalizeFirstLetter(category)}
         </Header>
       )}
+      {error && <div>{error}</div>}
+
       {page && pageSize && totalResults && (searchTerm || category) && (
         <Header as='h3'>
           {`Displaying results 1-${Math.min(
@@ -60,21 +62,23 @@ const NewsArticles = ({
           ))}
       </Item.Group>
 
-      {error && <div>{error}</div>}
       <div ref={resultsEndRef} />
 
       {newsArticles &&
         newsArticles.length &&
         !loading &&
         page < Math.ceil(totalResults / pageSize) && (
-          <Button
-            fluid
-            loading={loading}
-            primary
-            onClick={() => incrementPageNumber()}
-          >
-            Load more..
-          </Button>
+          <Fragment>
+            <Button
+              fluid
+              loading={loading}
+              primary
+              onClick={() => incrementPageNumber()}
+            >
+              Load more..
+            </Button>
+            <Divider clearing />
+          </Fragment>
         )}
     </Fragment>
   );

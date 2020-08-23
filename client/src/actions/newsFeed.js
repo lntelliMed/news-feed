@@ -90,7 +90,11 @@ export const setNewsSortBy = (sortBy) => ({
   sortBy,
 });
 
-export const getNewsSuccess = (articles, category, totalResults) => {
+export const getNewsSuccess = (
+  articles,
+  category = 'general',
+  totalResults
+) => {
   const data = { articles, category, totalResults };
   return {
     type: GET_NEWS_SUCCESS,
@@ -116,15 +120,16 @@ export const getNews = (requestObj) => (dispatch) => {
     .then((data) => {
       const { articles, sources, totalResults } = data;
       const { page, category, uri } = requestObj;
-      if (requestObj.uri === 'top-headlines') {
-        dispatch(getNewsSuccess(articles, category, totalResults));
-      } else if (uri === 'everything') {
+      if (uri === 'everything') {
         if (page && page === 1) {
           dispatch(clearSearchResults());
         }
         dispatch(getNewsSuccess(articles, 'searchResults', totalResults));
       } else if (uri === 'sources') {
         dispatch(getNewsSuccess(sources, 'sources', totalResults));
+      } else {
+        //Assuming: uri === 'top-headlines'
+        dispatch(getNewsSuccess(articles, category, totalResults));
       }
       return data.articles;
     })
