@@ -18,6 +18,9 @@ import {
   SET_SEARCH_TO_DATE,
   SET_NEWS_SORTBY,
   CLEAR_SEARCH_RESULTS,
+  SAVE_ARTICLE_SUCCESS,
+  GET_SAVED_ARTICLES_SUCCESS,
+  DELETE_SAVED_ARTICLE_SUCCESS,
 } from './types';
 
 export const startLoading = () => ({
@@ -104,30 +107,28 @@ export const clearSearchResults = () => ({
   type: CLEAR_SEARCH_RESULTS,
 });
 
-export const getNews = (requestObj) => {
-  return (dispatch) => {
-    dispatch(startLoading());
-    return axios
-      .get(buildUrl(requestObj))
-      .then(checkResponseForErrors)
-      .then((res) => res.data)
-      .then((data) => {
-        const { articles, sources, totalResults } = data;
-        const { page, category, uri } = requestObj;
-        if (requestObj.uri === 'top-headlines') {
-          dispatch(getNewsSuccess(articles, category, totalResults));
-        } else if (uri === 'everything') {
-          if (page && page === 1) {
-            dispatch(clearSearchResults());
-          }
-          dispatch(getNewsSuccess(articles, 'searchResults', totalResults));
-        } else if (uri === 'sources') {
-          dispatch(getNewsSuccess(sources, 'sources', totalResults));
+export const getNews = (requestObj) => (dispatch) => {
+  dispatch(startLoading());
+  return axios
+    .get(buildUrl(requestObj))
+    .then(checkResponseForErrors)
+    .then((res) => res.data)
+    .then((data) => {
+      const { articles, sources, totalResults } = data;
+      const { page, category, uri } = requestObj;
+      if (requestObj.uri === 'top-headlines') {
+        dispatch(getNewsSuccess(articles, category, totalResults));
+      } else if (uri === 'everything') {
+        if (page && page === 1) {
+          dispatch(clearSearchResults());
         }
-        return data.articles;
-      })
-      .catch((error) => dispatch(getNewsFailure(error)));
-  };
+        dispatch(getNewsSuccess(articles, 'searchResults', totalResults));
+      } else if (uri === 'sources') {
+        dispatch(getNewsSuccess(sources, 'sources', totalResults));
+      }
+      return data.articles;
+    })
+    .catch((error) => dispatch(getNewsFailure(error)));
 };
 
 export const buildUrl = (requestObj) => {
@@ -192,4 +193,69 @@ export const checkResponseForErrors = (response) => {
     );
   }
   return response;
+};
+
+export const getSavedArticlesSuccess = (articles, category, totalResults) => {
+  const data = { articles, category, totalResults };
+  return {
+    type: GET_SAVED_ARTICLES_SUCCESS,
+    data,
+  };
+};
+
+export const getSavedArticles = () => (dispatch) => {
+  let articles = [];
+  const savedArticles = JSON.parse(localStorage.getItem('articles'));
+  if (savedArticles && savedArticles.length) {
+    articles = savedArticles;
+  }
+  return dispatch(
+    getSavedArticlesSuccess(articles, 'savedArticles', articles.length)
+  );
+};
+
+export const saveArticleSuccess = (article, category, totalResults) => {
+  const data = { article, category, totalResults };
+  return {
+    type: SAVE_ARTICLE_SUCCESS,
+    data,
+  };
+};
+
+export const saveArticle = (article) => (dispatch) => {
+  let articles = [];
+  const savedArticles = JSON.parse(localStorage.getItem('articles'));
+  if (savedArticles && savedArticles.length) {
+    articles = savedArticles;
+  }
+  articles.push(article);
+  localStorage.setItem('employees', JSON.stringify(articles));
+  return dispatch(
+    saveArticleSuccess(article, 'savedArticles', articles.length)
+  );
+};
+
+export const deleteSavedArticleSuccess = (
+  articleId,
+  category,
+  totalResults
+) => {
+  const data = { articleId, category, totalResults };
+  return {
+    type: DELETE_SAVED_ARTICLE_SUCCESS,
+    data,
+  };
+};
+
+export const deleteSavedArticle = (articleId) => (dispatch) => {
+  let articles = [];
+  const savedArticles = JSON.parse(localStorage.getItem('articles'));
+  if (savedArticles && savedArticles.length > 0) {
+    articles = savedArticles.filter((article) => article.id !== articleId);
+    localStorage.setItem('employees', JSON.stringify(articles));
+  }
+
+  return dispatch(
+    deleteSavedArticleSuccess(articleId, 'searchResults', articles.length)
+  );
 };

@@ -16,6 +16,9 @@ import {
   SET_SEARCH_TO_DATE,
   SET_NEWS_SORTBY,
   CLEAR_SEARCH_RESULTS,
+  SAVE_ARTICLE_SUCCESS,
+  GET_SAVED_ARTICLES_SUCCESS,
+  DELETE_SAVED_ARTICLE_SUCCESS,
 } from '../actions/types';
 
 const intialState = {
@@ -30,6 +33,7 @@ const intialState = {
 
     sources: [],
     searchResults: [],
+    savedArticles: [],
   },
   totalResults: 0,
   loading: true,
@@ -171,6 +175,54 @@ export default (state = intialState, action) => {
         params: { ...state.params, from: action.sortBy },
       };
     }
+    case GET_SAVED_ARTICLES_SUCCESS:
+      const savedArticlesArray = [
+        ...state.news[action.data.category],
+        ...action.data.articles,
+      ];
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        totalResults: action.data.totalResults,
+        news: {
+          ...state.news,
+          [action.data.category]: savedArticlesArray,
+        },
+      };
+
+    case SAVE_ARTICLE_SUCCESS:
+      const postAdditionSavedArticlesArray = [
+        ...state.news[action.data.category],
+        action.data.article,
+      ];
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        totalResults: action.data.totalResults,
+        news: {
+          ...state.news,
+          [action.data.category]: postAdditionSavedArticlesArray,
+        },
+      };
+
+    case DELETE_SAVED_ARTICLE_SUCCESS:
+      const postDeletionSavedArticlesArray = [
+        ...state.news[action.data.category].filter(
+          (article) => article.id !== action.data.articleId
+        ),
+      ];
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        totalResults: action.data.totalResults,
+        news: {
+          ...state.news,
+          [action.data.category]: postDeletionSavedArticlesArray,
+        },
+      };
     default:
       return state;
   }
