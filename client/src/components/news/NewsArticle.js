@@ -29,7 +29,7 @@ const NewsArticle = ({
       clearTimeout(saveTimeout);
       setSaveTimeout(null);
     };
-  }, [saveTimeout]);
+  }, []);
 
   const handeArticleSave = () => {
     saveArticle({
@@ -119,7 +119,12 @@ const NewsArticle = ({
         <br></br>
         <Item.Extra>
           <Button.Group>
-            <Button href={url} target='_blank' rel='noopener noreferrer'>
+            <Button
+              href={url}
+              target='_blank'
+              rel='noopener noreferrer'
+              size='mini'
+            >
               <Icon name='edge' />
               Read
             </Button>
@@ -131,6 +136,7 @@ const NewsArticle = ({
               onClick={handeArticleSave}
               disabled={isSaving}
               loading={isSaving}
+              size='mini'
             >
               <Icon name='heart' inverted loading={isSaving} />
               {!isSaved ? 'Save' : 'Saved!'}
@@ -141,6 +147,7 @@ const NewsArticle = ({
             to='/saved-articles'
             labelPosition='right'
             floated='right'
+            size='mini'
           >
             <Button color='red'>
               <Icon name='heart' />
