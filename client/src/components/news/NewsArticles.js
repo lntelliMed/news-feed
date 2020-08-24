@@ -49,20 +49,22 @@ const NewsArticles = ({
           <br></br>
         </Header>
       )}
-      <Item.Group divided>
-        {newsArticles &&
-          newsArticles.length > 0 &&
-          newsArticles.map((article, index) => (
-            <Segment key={index}>
-              <NewsArticle
-                {...article}
-                saveArticle={saveArticle}
-                deleteSavedArticle={deleteSavedArticle}
-                totalSavedArticles={totalSavedArticles}
-              />
-            </Segment>
-          ))}
-      </Item.Group>
+      {newsArticles && (
+        <Item.Group divided>
+          {newsArticles &&
+            newsArticles.length > 0 &&
+            newsArticles.map((article, index) => (
+              <Segment key={index}>
+                <NewsArticle
+                  {...article}
+                  saveArticle={saveArticle}
+                  deleteSavedArticle={deleteSavedArticle}
+                  totalSavedArticles={totalSavedArticles}
+                />
+              </Segment>
+            ))}
+        </Item.Group>
+      )}
 
       <div ref={resultsEndRef} />
 

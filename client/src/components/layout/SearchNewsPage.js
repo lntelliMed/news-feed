@@ -23,6 +23,7 @@ const SearchNewsPage = ({
   clearSearchResults,
   searchResults,
   totalResults,
+  totalSavedArticles,
   saveArticle,
   deleteSavedArticle,
   loading,
@@ -32,19 +33,6 @@ const SearchNewsPage = ({
   const [pageSize, setPageSize] = useState(5);
   const [uri, setUri] = useState('everything');
   const [advancedSettings, setAdvancedSettings] = useState(false);
-
-  // Initialize sources dropdown!
-  useEffect(() => {
-    const requestObj = {
-      language: 'en',
-      uri: 'sources',
-    };
-    getNews(requestObj);
-  }, [getNews]);
-
-  useEffect(() => {
-    searchAllNews();
-  }, [page]);
 
   const [formData, setFormData] = useState({
     searchTerm: '',
@@ -69,6 +57,21 @@ const SearchNewsPage = ({
     source,
     domain,
   } = formData;
+
+  // Initialize sources dropdown!
+  useEffect(() => {
+    const requestObj = {
+      language: 'en',
+      uri: 'sources',
+    };
+    getNews(requestObj);
+  }, [getNews]);
+
+  useEffect(() => {
+    if (searchTerm) {
+      searchAllNews();
+    }
+  }, [page]);
 
   let apiNewsSources;
   if (sources && sources.length) {
@@ -263,6 +266,7 @@ const SearchNewsPage = ({
           loading={loading}
           newsArticles={searchResults}
           totalResults={totalResults}
+          totalSavedArticles={totalSavedArticles}
           error={error}
           page={page}
           pageSize={pageSize}
@@ -286,6 +290,7 @@ SearchNewsPage.propTypes = {
   sources: PropTypes.array.isRequired,
   searchResults: PropTypes.array,
   totalResults: PropTypes.number,
+  totalSavedArticles: PropTypes.number,
   saveArticle: PropTypes.func.isRequired,
   deleteSavedArticle: PropTypes.func.isRequired,
   error: PropTypes.any,
@@ -296,6 +301,7 @@ const mapStateToProps = (state) => ({
   sources: state.newsFeed.news.sources,
   searchResults: state.newsFeed.news.searchResults,
   totalResults: state.newsFeed.totalResults,
+  totalSavedArticles: state.newsFeed.totalSavedArticles,
   loading: state.newsFeed.loading,
   error: state.newsFeed.error,
 });

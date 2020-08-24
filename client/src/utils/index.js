@@ -1,5 +1,7 @@
 import moment from 'moment';
 
+// TODO: Complete testing other functions..
+
 export const capitalizeFirstLetter = (str, defaultStr) => {
   const word = str || defaultStr;
   if (!word) {

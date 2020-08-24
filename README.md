@@ -75,3 +75,14 @@ Sam Alsmadi
 ### License
 
 This project is licensed under the MIT License
+
+---
+
+## TODO List:
+
+- Add JWT Authentication
+- Users will be able to login/signup and create their own profiles
+- Use MongoDB to save articles instead of localStorage
+- Add protected routes (e.g. save article, add comment, like/unlike news/comment, share news..)
+- Address any bugs (e.g. those related to CRUD operations, overall state management/updates while changing routes..)
+- etc.

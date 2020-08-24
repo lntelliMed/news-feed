@@ -59,8 +59,8 @@ it('can fetch a list of articles and display them', (done) => {
     wrapped.update();
 
     expect(wrapped.find('.segment').length).toEqual(1);
-    expect(wrapped.find('div').length).toEqual(23);
-    expect(wrapped.find('a').length).toEqual(5);
+    expect(wrapped.find('div').length).toEqual(25);
+    expect(wrapped.find('a').length).toEqual(7);
 
     done();
     wrapped.unmount();

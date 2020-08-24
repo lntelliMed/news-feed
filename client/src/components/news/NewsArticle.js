@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { Button, Item, Icon, Label } from 'semantic-ui-react';
 import { v4 as uuidv4 } from 'uuid';
@@ -21,6 +21,15 @@ const NewsArticle = ({
 }) => {
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [saveTimeout, setSaveTimeout] = useState(null);
+
+  useEffect(() => {
+    return () => {
+      if (!saveTimeout) return;
+      clearTimeout(saveTimeout);
+      setSaveTimeout(null);
+    };
+  }, [saveTimeout]);
 
   const handeArticleSave = () => {
     saveArticle({
@@ -36,14 +45,16 @@ const NewsArticle = ({
     });
     setIsSaving(true);
 
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setIsSaving(false);
       setIsSaved(true);
       setTimeout(() => {
         setIsSaved(false);
-      }, 2000);
-    }, 2000);
+      }, 1000);
+    }, 1000);
+    setSaveTimeout(timeout);
   };
+
   return (
     <Item>
       <Item.Meta>
