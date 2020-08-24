@@ -112,9 +112,22 @@ export default (state = intialState, action) => {
       };
     }
     case SET_CATEGORY: {
+      // Clean up news for that category also, if any, just in case
+      // in order to prevent any issues that could happen after changing
+      // category/page from within components (as with LandingPage, etc.)
       return {
         ...state,
-        params: { ...state.params, category: action.category },
+        loading: false,
+        error: null,
+        totalResults: 0,
+        news: {
+          ...state.news,
+          [action.category]: [],
+        },
+        params: {
+          ...state.params,
+          category: action.category,
+        },
       };
     }
     case SET_NEWS_URI: {

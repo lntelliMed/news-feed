@@ -9,6 +9,7 @@ import {
 } from '../../actions/newsFeed';
 import Spinner from './Spinner';
 import NewsArticles from '../news/NewsArticles';
+import { categories } from '../../data/categories';
 
 const LandingPage = ({
   getNews,
@@ -21,7 +22,15 @@ const LandingPage = ({
   error,
   loading,
 }) => {
-  const [page, setPage] = useState(1);
+  const initializePageNumbers = () => {
+    const pageNumbersConfig = {};
+    for (let category of categories) {
+      pageNumbersConfig[category.key] = 1;
+    }
+    return pageNumbersConfig;
+  };
+
+  const [page, setPage] = useState(initializePageNumbers());
   const [pageSize, setPageSize] = useState(5);
   const [language, setLanguage] = useState('en');
   const [country, setCountry] = useState('us');
@@ -32,11 +41,15 @@ const LandingPage = ({
       language,
       country,
       // use default category in case there is a delay with value retrieval from Navbar!
-      category: category || 'general',
+      // category: category || 'general',
+      category: category,
       uri,
-      page: page,
+      page: page[category] || 1,
       pageSize,
     };
+    console.log('requestObj', requestObj);
+    console.log('page', page);
+
     getNews(requestObj);
   }, [page, category, language, country, uri, pageSize]);
 
@@ -53,11 +66,13 @@ const LandingPage = ({
       totalResults={totalResults}
       totalSavedArticles={totalSavedArticles}
       error={error}
-      page={page}
+      page={page[category] || 1}
       pageSize={pageSize}
       saveArticle={saveArticle}
       deleteSavedArticle={deleteSavedArticle}
-      incrementPageNumber={() => setPage(page + 1)}
+      incrementPageNumber={() =>
+        setPage({ ...page, [category]: page[category] + 1 })
+      }
     />
   );
 };

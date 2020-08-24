@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Form, Segment, Icon } from 'semantic-ui-react';
+import { Form, Segment, Icon, Header } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 import {
@@ -257,7 +257,7 @@ const SearchNewsPage = ({
           </Segment>
         )}
       </Form>
-      {searchResults && searchResults.length > 0 && (
+      {searchResults && searchResults.length > 0 ? (
         <NewsArticles
           searchTerm={searchTerm}
           loading={loading}
@@ -270,6 +270,11 @@ const SearchNewsPage = ({
           deleteSavedArticle={deleteSavedArticle}
           incrementPageNumber={() => setPage(page + 1)}
         />
+      ) : (
+        <Header as='h3'>
+          No results to display. Please enter a valid search criteria, then
+          click on the Search News button..
+        </Header>
       )}
     </Fragment>
   );

@@ -108,12 +108,7 @@ const NewsArticle = ({
         <br></br>
         <Item.Extra>
           <Button.Group>
-            <Button
-              primary
-              href={url}
-              target='_blank'
-              rel='noopener noreferrer'
-            >
+            <Button href={url} target='_blank' rel='noopener noreferrer'>
               <Icon name='edge' />
               Read more..
             </Button>
@@ -121,7 +116,6 @@ const NewsArticle = ({
 
             <Button
               negative={isSaved}
-              positive={isSaved}
               positive
               onClick={handeArticleSave}
               disabled={isSaving}
