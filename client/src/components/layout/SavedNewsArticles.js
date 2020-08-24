@@ -6,7 +6,6 @@ import {
   Image,
   Placeholder,
   Header,
-  Confirm,
   Icon,
   Label,
 } from 'semantic-ui-react';
@@ -16,6 +15,7 @@ import PropTypes from 'prop-types';
 import { getSavedArticles, deleteSavedArticle } from '../../actions/newsFeed';
 import { shortenString, formatDate } from '../../utils';
 import placeHolderImage from '../../img/placeholder-news.jpg';
+import ConfirmModal from './ConfirmModal';
 
 const SavedNewsArticles = ({
   savedArticles,
@@ -92,21 +92,6 @@ const SavedNewsArticles = ({
                   )}
                 </Card.Content>
 
-                <Confirm
-                  header='Delete Article'
-                  content='This will delete the article from your local storage permanently. Are you sure?'
-                  dimmer='inverted'
-                  size='tiny'
-                  open={showConfirmModal}
-                  cancelButton='Cancel'
-                  confirmButton='OK'
-                  onCancel={() => setShowConfirmModal(false)}
-                  onConfirm={() => {
-                    setShowConfirmModal(false);
-                    deleteSavedArticle(articleToDelete.id);
-                    getSavedArticles();
-                  }}
-                />
                 <Card.Content extra>
                   <Button
                     disabled={loading}
@@ -131,6 +116,21 @@ const SavedNewsArticles = ({
       ) : (
         <Header as='h3'>You have no saved articles!</Header>
       )}
+
+      <ConfirmModal
+        header='Delete Article'
+        confirmationMessage='This will delete this article from your local storage permanently.'
+        article={articleToDelete}
+        handleOpenModal={setShowConfirmModal}
+        handleCloseModal={setShowConfirmModal}
+        isOpen={showConfirmModal}
+        handleUserCancel={setShowConfirmModal}
+        handleUserConfirm={() => {
+          setShowConfirmModal(false);
+          deleteSavedArticle(articleToDelete.id);
+          getSavedArticles();
+        }}
+      />
     </Fragment>
   );
 };
