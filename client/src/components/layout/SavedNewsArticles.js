@@ -29,6 +29,12 @@ const SavedNewsArticles = ({
   }, []);
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [articleToDelete, setArticleToDelete] = useState(null);
+
+  const confirmDeletion = (article) => {
+    setShowConfirmModal(true);
+    setArticleToDelete(article);
+  };
 
   return (
     <Fragment>
@@ -97,7 +103,7 @@ const SavedNewsArticles = ({
                   onCancel={() => setShowConfirmModal(false)}
                   onConfirm={() => {
                     setShowConfirmModal(false);
-                    deleteSavedArticle(article.id);
+                    deleteSavedArticle(articleToDelete.id);
                     getSavedArticles();
                   }}
                 />
@@ -113,7 +119,7 @@ const SavedNewsArticles = ({
                   </Button>
                   <Button
                     disabled={loading}
-                    onClick={(e) => setShowConfirmModal(true)}
+                    onClick={(e) => confirmDeletion(article)}
                   >
                     Delete
                   </Button>
