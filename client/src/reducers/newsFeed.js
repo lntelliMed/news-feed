@@ -16,6 +16,7 @@ import {
   SET_SEARCH_TO_DATE,
   SET_NEWS_SORTBY,
   CLEAR_SEARCH_RESULTS,
+  CLEAR_NEWS_RESULTS,
   SAVE_ARTICLE_SUCCESS,
   GET_SAVED_ARTICLES_SUCCESS,
   DELETE_SAVED_ARTICLE_SUCCESS,
@@ -83,14 +84,25 @@ export default (state = intialState, action) => {
         },
       };
     case CLEAR_SEARCH_RESULTS:
-      console.log('deleting search results', state, state.news.searchResults);
       return {
         ...state,
         loading: false,
         error: null,
+        totalResults: 0,
         news: {
           ...state.news,
           searchResults: [],
+        },
+      };
+    case CLEAR_NEWS_RESULTS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        totalResults: 0,
+        news: {
+          ...state.news,
+          [action.category]: [],
         },
       };
     case GET_NEWS_FAIL:
@@ -127,6 +139,7 @@ export default (state = intialState, action) => {
         params: {
           ...state.params,
           category: action.category,
+          page: 1,
         },
       };
     }

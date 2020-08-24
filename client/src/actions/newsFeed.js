@@ -18,6 +18,7 @@ import {
   SET_SEARCH_TO_DATE,
   SET_NEWS_SORTBY,
   CLEAR_SEARCH_RESULTS,
+  CLEAR_NEWS_RESULTS,
   SAVE_ARTICLE_SUCCESS,
   GET_SAVED_ARTICLES_SUCCESS,
   DELETE_SAVED_ARTICLE_SUCCESS,
@@ -107,6 +108,11 @@ export const clearSearchResults = () => ({
   type: CLEAR_SEARCH_RESULTS,
 });
 
+export const clearNewsResults = (category) => ({
+  type: CLEAR_NEWS_RESULTS,
+  category,
+});
+
 export const getNews = (requestObj) => (dispatch) => {
   dispatch(startLoading());
   return axios
@@ -124,6 +130,10 @@ export const getNews = (requestObj) => (dispatch) => {
       } else if (uri === 'sources') {
         dispatch(getNewsSuccess(sources, 'sources', totalResults));
       } else {
+        if (page && page === 1) {
+          dispatch(getNewsSuccess(articles, category, totalResults));
+          dispatch(clearNewsResults(category));
+        }
         //Assuming: uri === 'top-headlines'
         dispatch(getNewsSuccess(articles, category, totalResults));
       }

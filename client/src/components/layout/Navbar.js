@@ -8,14 +8,16 @@ import { setCategory } from '../../actions/newsFeed';
 import { categories } from '../../data/categories';
 import { capitalizeFirstLetter } from '../../utils';
 
-const Navbar = ({ setCategory, loading, history }) => {
+const Navbar = ({ setCategory, loading, history, location }) => {
   const [activeItem, setActiveItem] = useState('home');
   const [newCategory, setNewCategory] = useState('general');
 
   useEffect(() => {
     setCategory(newCategory);
-    if (history) {
-      history.push('/');
+    if (location && location.pathName !== '/') {
+      if (history) {
+        history.push('/');
+      }
     }
   }, [newCategory, setCategory]);
 
