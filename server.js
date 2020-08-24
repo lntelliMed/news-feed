@@ -1,10 +1,11 @@
 const express = require('express');
 const path = require('path');
 
+const newsRoutes = require('./routes/api/news');
 const app = express();
 
 app.use(express.json());
-app.use('/api/news', require('./routes/api/news'));
+app.use('/api/news', newsRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

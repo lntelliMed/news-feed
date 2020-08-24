@@ -45,8 +45,7 @@ const LandingPage = React.memo(
         language,
         country,
         // use default category in case there is a delay with value retrieval from Navbar!
-        // category: category || 'general',
-        category: category,
+        category: category || 'general',
         uri,
         // page: page[category] || 1,
         page,
