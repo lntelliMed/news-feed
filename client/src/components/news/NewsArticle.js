@@ -121,7 +121,7 @@ const NewsArticle = ({
           <Button.Group>
             <Button href={url} target='_blank' rel='noopener noreferrer'>
               <Icon name='edge' />
-              Read more..
+              Read
             </Button>
             <Button.Or />
 
@@ -133,7 +133,7 @@ const NewsArticle = ({
               loading={isSaving}
             >
               <Icon name='heart' inverted loading={isSaving} />
-              {!isSaved ? 'Save Article' : 'Item Saved!'}
+              {!isSaved ? 'Save' : 'Saved!'}
             </Button>
           </Button.Group>
           <Button
